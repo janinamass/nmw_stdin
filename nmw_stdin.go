@@ -1,4 +1,4 @@
-package main
+package nmw_stdin
 
 import (
 	"fmt"
@@ -6,17 +6,17 @@ import (
 	"strings"
 	"os"
 	"io/ioutil"
-	"runtime"
-	"sync"
-	nm "github.com/gglyptodon/needlemango"
+	//"runtime"
+	//"sync"
+	nm "github.com/janinamass/needlemango"
 )
 
-func repeat() string {
+func Repeat() string {
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	check(err)
 	return(string(bytes))
 }
-func readFromStdin() []byte{
+func ReadFromStdin() []byte{
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	check(err)
 	return(bytes)
@@ -27,19 +27,11 @@ func readFromStdin() []byte{
 MAIN
 */
 
-func main(){
+/*func main(){
 	var stdinContent string
 	stdinContent = repeat()
 	var allA, allB []nm.Sequence
 	allA, allB = splitOnMarker(stdinContent,"")
-
-	//fmt.Println(stdinContent)
-
-
-	//allA = FastaReader{file:fastaFileA}.getSequences()
-	//allB = FastaReader{file:fastaFileB}.getSequences()
-	//allA = FastaReaderStd{inputString: stdinContent}.getSequences()
-	//allB = FastaReaderStd{inputString: stdinContent}.getSequences()
 	eblosum62 := nm.MakeSubstitutionMatrix("EBLOSUM62" )
 	eblosum62.SetMap("EBLOSUM62")
 
@@ -88,11 +80,11 @@ func main(){
 		fmt.Print(v)
 	}
 }
-
+*/
 func Consumer(limit int, inChan <-chan Task){
 	for i := 0; i< limit;i++{
 		for s := range inChan {
-			fmt.Println(nm.PrettyPrint(nm.Nmw(s.a, s.b, s.sm)))
+			fmt.Println(nm.PrettyPrint(nm.Nmw(s.A, s.B, s.Sm)))
     	}
 	}
 }
@@ -117,7 +109,7 @@ func check(e error) {
     }
 }
 
-func splitOnMarker(text string, marker string)([]nm.Sequence, []nm.Sequence){
+func SplitOnMarker(text string, marker string)([]nm.Sequence, []nm.Sequence){
 	var resA []nm.Sequence
 	var resB []nm.Sequence
 	var pieces []string
@@ -146,8 +138,8 @@ func splitOnMarker(text string, marker string)([]nm.Sequence, []nm.Sequence){
 }
 
 type Task struct{
-	a nm.Sequence
-	b nm.Sequence
-	sm nm.SubstitutionMatrix
+	A nm.Sequence
+	B nm.Sequence
+	Sm nm.SubstitutionMatrix
 }
 
